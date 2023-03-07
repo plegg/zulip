@@ -1433,9 +1433,12 @@ test("navbar_helpers", () => {
         assert.equal(filter.is_common_narrow(), test_case.is_common_narrow);
     }
 
-    function test_get_icon(test_case) {
+    function test_add_icon_data(test_case) {
         const filter = new Filter(test_case.operator);
-        assert.equal(filter.get_icon(), test_case.icon);
+        const context = {};
+        filter.add_icon_data(context);
+        assert.equal(context.icon, test_case.icon);
+        assert.equal(context.zulip_icon, test_case.zulip_icon);
     }
 
     function test_get_title(test_case) {
@@ -1446,7 +1449,7 @@ test("navbar_helpers", () => {
     function test_helpers(test_case) {
         // debugging tip: add a `console.log(test_case)` here
         test_common_narrow(test_case);
-        test_get_icon(test_case);
+        test_add_icon_data(test_case);
         test_get_title(test_case);
         test_redirect_url_with_search(test_case);
     }
@@ -1537,7 +1540,7 @@ test("navbar_helpers", () => {
         {
             operator: stream_topic_operators,
             is_common_narrow: true,
-            icon: "hashtag",
+            zulip_icon: "hashtag",
             title: "Foo",
             redirect_url_with_search: "/#narrow/stream/43-Foo/topic/bar",
         },
@@ -1551,7 +1554,7 @@ test("navbar_helpers", () => {
         {
             operator: stream_operator,
             is_common_narrow: true,
-            icon: "hashtag",
+            zulip_icon: "hashtag",
             title: "Foo",
             redirect_url_with_search: "/#narrow/stream/43-Foo",
         },
@@ -1572,14 +1575,14 @@ test("navbar_helpers", () => {
         {
             operator: private_stream_operator,
             is_common_narrow: true,
-            icon: "lock",
+            zulip_icon: "lock",
             title: "psub",
             redirect_url_with_search: "/#narrow/stream/22-psub",
         },
         {
             operator: web_public_stream_operator,
             is_common_narrow: true,
-            icon: "globe",
+            zulip_icon: "globe",
             title: "webPublicSub",
             redirect_url_with_search: "/#narrow/stream/12-webPublicSub",
         },
@@ -1627,7 +1630,7 @@ test("navbar_helpers", () => {
         {
             operator: stream_topic_near,
             is_common_narrow: false,
-            icon: "hashtag",
+            zulip_icon: "hashtag",
             title: "Foo",
             redirect_url_with_search: "#",
         },
